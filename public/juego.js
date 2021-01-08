@@ -3,6 +3,7 @@ const socket = io();
 let barcos = 3;
 let barcosIniciales = barcos;
 let vidas = barcos;
+let tirosacertados = 3;
 let posiciones =[];
 let posicionesEnemigas=[];
 let turno = new Boolean(null);
@@ -21,7 +22,7 @@ function PonerBarco(coordenada)
     {
         if(posiciones.indexOf(coordenada) > -1)
         {
-            alert('Ya hay un barco en esa casilla');
+            alert('Ya hay un patito en esa casilla');
         }
         else
         {
@@ -34,7 +35,7 @@ function PonerBarco(coordenada)
     }
     else
     {
-        alert('Ya no puedes poner más barcos');
+        alert('Ya no puedes poner más patitos');
     }
     
 }
@@ -48,6 +49,11 @@ function Tirar(boton)
             if(posicionesEnemigas.indexOf(aux) > -1)
             {
                 document.getElementById(coordenada + 'img').src = 'calavera.png';
+                tirosacertados = tirosacertados-1;
+                if(tirosacertados<=0){
+                    alert('Ganaste uwu');
+                }
+
             }
             else
             {
@@ -58,23 +64,27 @@ function Tirar(boton)
             }
     else
     {
-        alert('Espera a que todos los barcos estén colocados');
+        alert('Espera a que todos los patitos estén colocados');
     }
     
 }
 
 function ValidarInicio()
 {
-
-    if(posiciones.length < barcosIniciales  || posicionesEnemigas.length < barcosIniciales)
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    
+        if(posiciones.length < barcosIniciales  || posicionesEnemigas.length < barcosIniciales)
+        
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }        
+   
+    
 }
+
 socket.on('juego:posiciones',function(posiciones)
 {
     posicionesEnemigas = posiciones;
